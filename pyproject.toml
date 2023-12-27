@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "rinha-2023"
+version = "0.1.0"
+description = ""
+authors = ["carlos-rian <crian.rian@gmail.com>"]
+readme = "README.md"
+packages = [{include = "rinha_2023"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.108.0"
+uvicorn = "^0.25.0"
+pysqlx-engine = "^0.2.27"
+gunicorn = "^21.2.0"
+redis = "^5.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
