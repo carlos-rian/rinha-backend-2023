@@ -47,7 +47,8 @@ jobs:
           echo "Starting stress test"
           cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
           echo "Stopping FastAPI Stack"
-          docker-compose down
+          cd && pwd && ls -la
+          cd rinha-2023-fastapi && docker-compose down
       
       - name: Robyn Stack
         run: |
@@ -57,4 +58,5 @@ jobs:
           echo "Starting stress test"
           cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
           echo "Stopping Robyn Stack"
-          docker-compose down
+          cd && pwd && ls -la
+          cd rinha-2023-robyn && docker-compose down
