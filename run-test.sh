@@ -15,5 +15,6 @@ sh $GATLING_BIN_DIR/gatling.sh -rm local -s RinhaBackendSimulation \
     -rsf $WORKSPACE/user-files/resources \
 
 sleep 3
-
-curl -v "http://localhost:9999/contagem-pessoas"
+echo "\n........Contagem de pessoas.......\n"
+echo 'Total:' $(curl -s http://localhost:9999/contagem-pessoas)
+echo "\n........Contagem de pessoas.......\n"
