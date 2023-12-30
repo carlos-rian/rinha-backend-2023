@@ -28,8 +28,15 @@ jobs:
       
       - name: clone rinha-backend
         run: |
-          cp -r gatling $HOME/gatling
           git clone https://github.com/zanfranceschi/rinha-de-backend-2023-q3.git --depth 1 $HOME/rinha-de-backend-2023-q3
+        
+      - name: donwload gatling
+        run: |
+          wget https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.9.5/gatling-charts-highcharts-bundle-3.9.5-bundle.zip
+          unzip gatling-charts-highcharts-bundle-3.9.5-bundle.zip
+          mv gatling-charts-highcharts-bundle-3.9.5 $HOME/gatling
+          rm gatling-charts-highcharts-bundle-3.9.5-bundle.zip
+          ls -la $HOME/gatling
 
       - name: FastAPI Stack
         run: |
