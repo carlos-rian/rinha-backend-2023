@@ -7,11 +7,10 @@ from uuid import UUID
 
 from fastapi import FastAPI, Query, Response
 from fastapi.responses import Response
+from model import PersonWrite
 from psycopg.errors import UniqueViolation
 from psycopg.rows import dict_row
 from psycopg_pool import AsyncConnectionPool
-
-from model import PersonWrite
 
 INSERT = "INSERT INTO pessoa (id, apelido, nome, nascimento, stack) VALUES (%(id)s, %(apelido)s, %(nome)s, %(nascimento)s, %(stack)s)"
 SELECT_BY_ID = "SELECT id, apelido, nome, nascimento, stack FROM pessoa p WHERE p.id = %(id)s LIMIT 1"
@@ -25,12 +24,7 @@ async def lifespan(app: FastAPI):
     sleep(5)
     global pool
     connection_max = int(os.getenv("DATABASE_POOL_SIZE", 10))
-    pool = AsyncConnectionPool(
-        conninfo=os.environ["DATABASE_URL"],
-        max_size=connection_max,
-        min_size=int(connection_max / 2),
-        max_idle=int(connection_max / 3),
-    )
+    pool = AsyncConnectionPool(conninfo=os.environ["DATABASE_URL"], max_size=connection_max, min_size=40, max_idle=50)
     logging.warning("Database pool started!")
     yield
     logging.warning("Waiting 5 seconds to close database pool...")
