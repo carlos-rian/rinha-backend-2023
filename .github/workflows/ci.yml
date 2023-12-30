@@ -45,7 +45,7 @@ jobs:
           cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10 && cd ..
           curl http://localhost:9999/contagem-pessoas -v
           echo "================FastAPI Stack ready================"
-          sh ./rinha-de-backend-2023-q3/stress-test/run-test.sh
+          cd ./rinha-de-backend-2023-q3/stress-test && ./run-test.sh && cd ../..
           docker-compose down -rmi all --volumes
           echo "================FastAPI Stack st================"
       
@@ -54,6 +54,6 @@ jobs:
           cd rinha-2023-robyn && docker-compose up --build --detach && docker ps -a && sleep 10 && cd ..
           curl http://localhost:9999/contagem-pessoas -v
           echo "=================Robyn Stack ready================="
-          sh ./rinha-de-backend-2023-q3/stress-test/run-test.sh
+          cd ./rinha-de-backend-2023-q3/stress-test && ./run-test.sh && cd ../..
           docker-compose down -rmi all --volumes
           echo "=================Robyn Stack stop================="
