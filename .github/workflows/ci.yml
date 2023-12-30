@@ -41,24 +41,20 @@ jobs:
 
       - name: FastAPI Stack
         run: |
-          pwd && ls -la
+          ls -la
           cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10
           curl http://localhost:9999/contagem-pessoas -v
           echo "================FastAPI Stack ready================"
-          echo "Starting stress test"
-          cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
-          echo "Stopping FastAPI Stack"
-          cd $HOME/runners/rinha-backend-2023
-          cd rinha-2023-fastapi && docker-compose down
+          ./$HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
+          docker-compose down -rmi all --volumes
+          echo "================FastAPI Stack st================"
       
       - name: Robyn Stack
         run: |
-          pwd && ls -la
+          cd ..
           cd rinha-2023-robyn && docker-compose up --build --detach && docker ps -a && sleep 10
           curl http://localhost:9999/contagem-pessoas -v
           echo "=================Robyn Stack ready================="
-          echo "Starting stress test"
-          cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
-          echo "Stopping Robyn Stack"
-          cd $HOME/runners/rinha-backend-2023
-          cd rinha-2023-robyn && docker-compose down
+          ./$HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
+          docker-compose down -rmi all --volumes
+          echo "=================Robyn Stack stop================="
