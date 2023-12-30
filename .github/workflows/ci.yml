@@ -29,7 +29,7 @@ jobs:
       - name: clone rinha-backend
         run: |
           cp -r gatling $HOME/gatling
-          git clone git@github.com:zanfranceschi/rinha-de-backend-2023-q3.git --depth 1 $HOME/rinha-de-backend-2023-q3
+          git clone https://github.com/zanfranceschi/rinha-de-backend-2023-q3.git --depth 1 $HOME/rinha-de-backend-2023-q3
 
       - name: FastAPI Stack
         run: |
