@@ -7,12 +7,13 @@ services:
     container_name: api01
     command: gunicorn --bind 0.0.0.0:80 --workers 4 --worker-class 'uvicorn.workers.UvicornWorker' --timeout 30 'main:app'
     environment:
-      DATABASE_URL: postgresql://rinha:rinha@db/rinha?connect_timeout=60
+      DATABASE_URL: postgresql://rinha:rinha@localhost:5432/rinha?connect_timeout=60
       DATABASE_POOL_SIZE: 100
+    network_mode: host
     depends_on:
       - db
     expose:
-      - "80"
+      - "81:80"
     deploy:
       resources:
         limits:
@@ -23,6 +24,8 @@ services:
     <<: *api01
     hostname: api02
     container_name: api02
+    expose:
+      - "82:80"
 
   nginx:
     image: nginx:latest
