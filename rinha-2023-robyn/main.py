@@ -84,4 +84,4 @@ async def get_contagem_pessoas(request: Request):
     return count
 
 
-app.start()
+app.start(host=os.getenv("ROBYN_HOST", "127.0.0.1"), port=os.getenv("ROBYN_PORT", 80))
