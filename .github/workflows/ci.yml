@@ -34,14 +34,14 @@ jobs:
         run: |
           wget https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.9.5/gatling-charts-highcharts-bundle-3.9.5-bundle.zip
           unzip gatling-charts-highcharts-bundle-3.9.5-bundle.zip
-          mv gatling-charts-highcharts-bundle-3.9.5 $HOME/gatling
+          mv gatling-charts-highcharts-bundle-3.9.5 $HOME/gatling/3.9.5
           rm gatling-charts-highcharts-bundle-3.9.5-bundle.zip
           ls -la $HOME/gatling
 
       - name: FastAPI Stack
         run: |
           cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10
-          curl http://localhost:9999/contagem-pessoas -v && sleep 5
+          curl http://localhost:9999/contagem-pessoas -v
           echo "FastAPI Stack ready"
           echo "Starting stress test"
           cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
