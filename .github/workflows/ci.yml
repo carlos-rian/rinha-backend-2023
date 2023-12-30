@@ -43,7 +43,7 @@ jobs:
         run: |
           ls -la
           cd rinha-2023-fastapi && docker-compose up --force-recreate --detach && docker ps -a && sleep 10
-          curl http://localhost:9999/contagem-pessoas -v
+          echo 'Total:' $(curl -s http://localhost:9999/contagem-pessoas)
           echo "\n================FastAPI Stack ready================\n"
           sh $HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
           docker-compose down --rmi all && cd ..
@@ -52,7 +52,7 @@ jobs:
       - name: Robyn Stack
         run: |
           cd rinha-2023-robyn && docker-compose up --force-recreate --detach && docker ps -a && sleep 10
-          curl http://localhost:9999/contagem-pessoas -v
+          echo 'Total:' $(curl -s http://localhost:9999/contagem-pessoas)
           echo "\n=================Robyn Stack ready=================\n
           sh $HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
           docker-compose down --rmi all && cd ..
