@@ -1,18 +1,18 @@
 [tool.poetry]
-name = "rinha-2023"
+name = "rinha-2023-robyn"
 version = "0.1.0"
 description = ""
 authors = ["carlos-rian <crian.rian@gmail.com>"]
 readme = "README.md"
-packages = [{include = "rinha_2023"}]
+packages = [{include = "rinha_2023_robyn"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.108.0"
-uvicorn = "^0.25.0"
+robyn = "^0.49.3"
 pysqlx-engine = "^0.2.27"
-gunicorn = "^21.2.0"
-redis = "^5.0.1"
+psycopg-pool = "^3.2.0"
+psycopg-binary = "^3.1.16"
+psycopg = "^3.1.16"
 
 
 [tool.poetry.group.dev.dependencies]
