@@ -34,7 +34,8 @@ jobs:
         run: |
           wget https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/3.9.5/gatling-charts-highcharts-bundle-3.9.5-bundle.zip
           unzip gatling-charts-highcharts-bundle-3.9.5-bundle.zip
-          mv gatling-charts-highcharts-bundle-3.9.5 $HOME/gatling/3.9.5
+          mkdir -p $HOME/gatling/3.9.5
+          mv gatling-charts-highcharts-bundle-3.9.5 $HOME/gatling/3.9.5/
           rm gatling-charts-highcharts-bundle-3.9.5-bundle.zip
           ls -la $HOME/gatling
 
