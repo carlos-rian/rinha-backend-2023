@@ -46,14 +46,14 @@ jobs:
           curl http://localhost:9999/contagem-pessoas -v
           echo "================FastAPI Stack ready================"
           sh $HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
-          cd docker-compose down -rmi all --volumes && cd ..
+          cd docker-compose down --rmi all && cd ..
           echo "================FastAPI Stack st================"
       
       - name: Robyn Stack
         run: |
-          cd ../rinha-2023-robyn && docker-compose up --force-recreate --detach && docker ps -a && sleep 10
+          cd rinha-2023-robyn && docker-compose up --force-recreate --detach && docker ps -a && sleep 10
           curl http://localhost:9999/contagem-pessoas -v
           echo "=================Robyn Stack ready================="
           sh $HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
-          cd docker-compose down -rmi all --volumes && cd ..
+          cd docker-compose down --rmi all && cd ..
           echo "=================Robyn Stack stop================="
