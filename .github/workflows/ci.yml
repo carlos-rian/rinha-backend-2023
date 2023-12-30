@@ -34,4 +34,7 @@ jobs:
       - name: FastAPI Stack
         run: |
           cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10
-          cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-tests.sh
+          curl http://localhost:9999/contagem-pessoas -v && sleep 5
+          echo "FastAPI Stack ready"
+          echo "Starting stress test"
+          cd $HOME/rinha-de-backend-2023-q3/stress-test && ./run-test.sh
