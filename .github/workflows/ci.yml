@@ -28,8 +28,8 @@ jobs:
       
       - name: clone rinha-backend
         run: |
-          git clone https://github.com/zanfranceschi/rinha-de-backend-2023-q3.git --depth 1 $HOME/rinha-de-backend-2023-q3
-          cp -f run-test.sh $HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
+          git clone https://github.com/zanfranceschi/rinha-de-backend-2023-q3.git --depth 1 ./rinha-de-backend-2023-q3
+          cp -f run-test.sh ./rinha-de-backend-2023-q3/stress-test/run-test.sh
         
       - name: donwload gatling
         run: |
@@ -42,18 +42,18 @@ jobs:
       - name: FastAPI Stack
         run: |
           ls -la
-          cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10
+          cd rinha-2023-fastapi && docker-compose up --build --detach && docker ps -a && sleep 10 && cd ..
           curl http://localhost:9999/contagem-pessoas -v
           echo "================FastAPI Stack ready================"
-          .$HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
+          sh ./rinha-de-backend-2023-q3/stress-test/run-test.sh
           docker-compose down -rmi all --volumes
           echo "================FastAPI Stack st================"
       
       - name: Robyn Stack
         run: |
-          cd ../rinha-2023-robyn && docker-compose up --build --detach && docker ps -a && sleep 10
+          cd rinha-2023-robyn && docker-compose up --build --detach && docker ps -a && sleep 10 && cd ..
           curl http://localhost:9999/contagem-pessoas -v
           echo "=================Robyn Stack ready================="
-          .$HOME/rinha-de-backend-2023-q3/stress-test/run-test.sh
+          sh ./rinha-de-backend-2023-q3/stress-test/run-test.sh
           docker-compose down -rmi all --volumes
           echo "=================Robyn Stack stop================="
