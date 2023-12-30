@@ -5,15 +5,15 @@ services:
     build: .
     hostname: api01
     container_name: api01
-    command: gunicorn --bind 0.0.0.0:80 --workers 4 --worker-class 'uvicorn.workers.UvicornWorker' --timeout 30 'main:app'
+    command: gunicorn --bind 0.0.0.0:81 --workers 4 --worker-class 'uvicorn.workers.UvicornWorker' --timeout 30 'main:app'
     environment:
       DATABASE_URL: postgresql://rinha:rinha@localhost:5432/rinha?connect_timeout=60
       DATABASE_POOL_SIZE: 100
     network_mode: host
     depends_on:
       - db
-    ports:
-      - 81:80
+    expose:
+      - 81
     deploy:
       resources:
         limits:
@@ -24,8 +24,9 @@ services:
     <<: *api01
     hostname: api02
     container_name: api02
-    ports:
-      - 82:80
+    command: gunicorn --bind 0.0.0.0:82 --workers 4 --worker-class 'uvicorn.workers.UvicornWorker' --timeout 30 'main:app'
+    expose:
+      - 82
 
   nginx:
     image: nginx:latest
@@ -35,8 +36,9 @@ services:
     depends_on:
       - api01
       - api02
-    ports:
-      - 9999:9999
+    expose:
+      - 9999
+    network_mode: host
     deploy:
       resources:
         limits:
@@ -51,12 +53,13 @@ services:
       POSTGRES_USER: rinha
       POSTGRES_PASSWORD: rinha
       POSTGRES_DB: rinha
+    network_mode: host
     volumes:
       - ./db.sql:/docker-entrypoint-initdb.d/db.sql
       - ./postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf
     command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     deploy:
       resources:
         limits:
