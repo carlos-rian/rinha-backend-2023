@@ -2,7 +2,7 @@
 POST http://localhost:9999/pessoas
 
 {
-    "apelido" : "josée",
+    "apelido" : "josé",
     "nome" : "José Roberto",
     "nascimento" : "2000-10-01",
     "stack" : ["C#", "Node", "Oracle"]
@@ -29,7 +29,7 @@ POST http://localhost:9999/pessoas
 }
 
 ###
-GET http://localhost:9999/pessoas/3df45d18-a644-11ee-8f70-0242c0a82004
+GET http://localhost:9999/pessoas/10534176-a842-11ee-b626-0955d6be56a4
 
 
 ###

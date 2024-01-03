@@ -1,0 +1,75 @@
+version: "3.5"
+
+services:
+  api01: &api01
+    build: .
+    hostname: api01
+    command: python3 main.py --processes=4 --workers=2 --log-level=WARN
+    environment:
+      DATABASE_URL: postgresql://rinha:rinha@db/rinha?connect_timeout=60
+      DATABASE_POOL_SIZE: 120
+      REDIS_HOST: redis
+      ROBYN_PORT: 80
+      ROBYN_HOST: 0.0.0.0
+    depends_on:
+      - db
+      - redis
+    expose:
+      - 80
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "0.5GB"
+
+  api02:
+    <<: *api01
+    hostname: api02
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.local.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api01
+      - api02
+    ports:
+      - 9999:9999
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: "0.5GB"
+
+  db:
+    image: postgres
+    hostname: db
+    environment:
+      POSTGRES_USER: rinha
+      POSTGRES_PASSWORD: rinha
+      POSTGRES_DB: rinha
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf
+    command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "1GB"
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save "" --appendonly no
+    ports:
+      - "6379:6379"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: '0.5GB'
+    expose:
+      - 6379
