@@ -4,13 +4,14 @@ import os
 from time import sleep
 from uuid import UUID
 
-from model import HTTPException, PersonWrite
 from psycopg.errors import UniqueViolation
 from psycopg.rows import dict_row
 from psycopg_pool import AsyncConnectionPool
 from pydantic import ValidationError
 from redis.asyncio import ConnectionPool, StrictRedis
 from robyn import Headers, Request, Response, Robyn, jsonify
+
+from model import HTTPException, PersonWrite
 
 app = Robyn(__file__)
 
@@ -30,9 +31,7 @@ async def startup():
     sleep(5)
     global pool
     max_connections = int(os.getenv("DATABASE_POOL_SIZE", 10))
-    pool = AsyncConnectionPool(
-        conninfo=os.environ["DATABASE_URL"], max_size=max_connections, min_size=10, max_idle=50, timeout=60
-    )
+    pool = AsyncConnectionPool(conninfo=os.environ["DATABASE_URL"], max_size=max_connections, min_size=5, max_idle=10)
 
     global redis_pool
     host = os.getenv("REDIS_HOST", "localhost")
@@ -100,7 +99,7 @@ async def get_pessoas(request: Request):
 
 @app.get("/contagem-pessoas")
 async def get_contagem_pessoas(request: Request):
-    await asyncio.sleep(3)
+    await asyncio.sleep(10)
     async with pool.connection() as conn:
         cur = await conn.cursor().execute(SELECT_COUNT)
         count = (await cur.fetchone())[0]
